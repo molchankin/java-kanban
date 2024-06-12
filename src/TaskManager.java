@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private HashMap<Integer, Epic> epics = new HashMap<>();
-    private Integer idCounter = 0; //счетчик уникальных ID
+    private Integer idCounter = 0;
 
     public Integer getIdCounter() {
         idCounter++;
