@@ -2,18 +2,14 @@ public class Main {
 
     public static void main(String[] args) {
         TaskManager taskManager = new TaskManager();
-        Task task1 = new Task("Уборка", "Помыть пол и посуду,", ProgressStatus.NEW, taskManager.getIdCounter());
-        taskManager.addTask(task1);
-        Task task2 = new Task("Уборка", "Помыть пол и посуду,", ProgressStatus.IN_PROGRESS, task1.getId());
-        taskManager.updateTask(task2);
-        Epic epic1 = new Epic("Генеральная уборка", "Уборка", taskManager.getIdCounter());
-        Subtask subtask1ForEpic1 = new Subtask("Помыть окна","Использовать моющее средство и тряпку", ProgressStatus.NEW, taskManager.getIdCounter(), epic1.getId());
-        Subtask subtask2ForEpic1 = new Subtask("Помыть пол", "Использовать ведро с водой и швабру", ProgressStatus.IN_PROGRESS, taskManager.getIdCounter(), epic1.getId());
+        Epic epic1 = new Epic("Уборка","Уборка в квартире");
         taskManager.addEpic(epic1);
-        epic1.addSubtask(subtask1ForEpic1);
-        epic1.addSubtask(subtask2ForEpic1);
-        System.out.println(taskManager.getAllTasks());
-        System.out.println(taskManager.getAllEpics());
+        Subtask subtask1 = new Subtask("Помыть полы", "Использовать ведро и швабру", ProgressStatus.NEW, epic1.getId());
+        taskManager.addSubtask(subtask1);
+        Subtask subtask2 = new Subtask("Помыть посуду", "Вся посуда собрана в раковине", ProgressStatus.IN_PROGRESS, epic1.getId());
+        taskManager.addSubtask(subtask2);
+        System.out.println(taskManager.getSubtasksFromEpic(epic1.getId()));
+        taskManager.deleteSubtaskById(subtask1.getId());
+        System.out.println(taskManager.getSubtasksFromEpic(epic1.getId()));
     }
-
 }
