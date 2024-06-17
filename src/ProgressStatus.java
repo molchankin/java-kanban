@@ -1,4 +1,4 @@
-public enum ProgressStatus{
+public enum ProgressStatus {
     NEW,
     IN_PROGRESS,
     DONE
