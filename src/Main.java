@@ -15,5 +15,6 @@ public class Main {
         taskManager.updateSubtask(subtask3);
         System.out.println(taskManager.getSubtasksFromEpic(epic1.getId()));
         System.out.println(taskManager.getAllEpics());
+        System.out.println(taskManager.getSubtasksFromEpic(123));
     }
 }
