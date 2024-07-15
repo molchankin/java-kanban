@@ -1,3 +1,11 @@
+package test;
+
+import service.Managers;
+import service.TaskManager;
+import task.Epic;
+import task.ProgressStatus;
+import task.Subtask;
+import task.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -8,15 +16,15 @@ class TaskTest {
     @Test
     public void tasksEqualToEachOther() {
         TaskManager taskManager = Managers.getDefaults();
-        Task task = new Task("Task", "Description", ProgressStatus.NEW, 1);
-        Task task2 = new Task("Task", "Description", ProgressStatus.NEW, 1);
+        Task task = new Task("task", "Description", ProgressStatus.NEW, 1);
+        Task task2 = new Task("task", "Description", ProgressStatus.NEW, 1);
         assertEquals(task, task2);
     }
 
     @Test
     public void epicsEqualToEachOther() {
-        Epic epic = new Epic("Epic", "Description");
-        Epic epic2 = new Epic("Epic", "Description");
+        Epic epic = new Epic("Task.Epic", "Description");
+        Epic epic2 = new Epic("Task.Epic", "Description");
 
         assertEquals(epic, epic2);
     }
@@ -24,11 +32,11 @@ class TaskTest {
     @Test
     public void subtaskEqualToEachOther() {
         TaskManager taskManager = Managers.getDefaults();
-        Epic epic = new Epic("Epic", "Description");
+        Epic epic = new Epic("Task.Epic", "Description");
         taskManager.addEpic(epic);
 
-        Subtask subtask = new Subtask("Subtask", "Description", ProgressStatus.NEW, epic.getId());
-        Subtask subtask2 = new Subtask("Subtask", "Description", ProgressStatus.NEW, epic.getId());
+        Subtask subtask = new Subtask("Task.Subtask", "Description", ProgressStatus.NEW, epic.getId());
+        Subtask subtask2 = new Subtask("Task.Subtask", "Description", ProgressStatus.NEW, epic.getId());
         assertEquals(subtask, subtask2);
     }
 
@@ -41,8 +49,8 @@ class TaskTest {
     @Test
     public void checkAddTask() {
         TaskManager taskManager = Managers.getDefaults();
-        Task task = new Task("Task", "Description", ProgressStatus.NEW);
-        Task task2 = new Task("Task", "Description", ProgressStatus.NEW);
+        Task task = new Task("task", "Description", ProgressStatus.NEW);
+        Task task2 = new Task("task", "Description", ProgressStatus.NEW);
         taskManager.addTask(task);
         taskManager.addTask(task2);
         assertEquals(task, taskManager.getTaskById(task.getId()));
@@ -101,7 +109,7 @@ class TaskTest {
     @Test
     public void checkClearSubtaskMap() {
         TaskManager taskManager = Managers.getDefaults();
-        Epic epic = new Epic("Epic", "Description");
+        Epic epic = new Epic("Task.Epic", "Description");
         taskManager.addEpic(epic);
         Subtask subtask1 = new Subtask("Subtask1", "Description1", ProgressStatus.NEW, 0);
         Subtask subtask2 = new Subtask("Subtask2", "Description2", ProgressStatus.NEW, 0);

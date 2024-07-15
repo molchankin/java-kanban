@@ -1,3 +1,5 @@
+package task;
+
 public enum ProgressStatus {
     NEW,
     IN_PROGRESS,

@@ -1,3 +1,12 @@
+package impl;
+
+import service.HistoryManager;
+import service.Managers;
+import service.TaskManager;
+import task.Epic;
+import task.Subtask;
+import task.Task;
+
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {

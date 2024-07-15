@@ -1,3 +1,8 @@
+package impl;
+
+import service.HistoryManager;
+import task.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +13,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public List<Task> getViewedTasks() {
-        return viewedTasks;
+        return new ArrayList<>(viewedTasks);
     }
 
     @Override
