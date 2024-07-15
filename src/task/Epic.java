@@ -16,7 +16,7 @@ public class Epic extends Task {
         super(title, description, ProgressStatus.NEW);
     }
 
-    void addSubtask(Subtask subtask) {
+    public void addSubtask(Subtask subtask) {
         subtasksIds.add(subtask.getId());
     }
 
@@ -24,12 +24,12 @@ public class Epic extends Task {
         return subtasksIds;
     }
 
-    void deleteAllSubtask() {
+    public void deleteAllSubtask() {
         subtasksIds.clear();
         progressStatus = ProgressStatus.NEW;
     }
 
-    void deleteSubtaskById(Integer id) {
+    public void deleteSubtaskById(Integer id) {
         subtasksIds.remove(id);
     }
 
