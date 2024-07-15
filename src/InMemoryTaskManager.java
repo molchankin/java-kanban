@@ -1,14 +1,10 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private final List<Task> viewedTasks = new ArrayList<>();
-
+    private final Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, Epic> epics = new HashMap<>();
+    private final Map<Integer, Subtask> subtasks = new HashMap<>();
+    private final HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
 
 
     private Integer idCounter = 0;
@@ -19,12 +15,6 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
 
-    private void addTaskToViewed(Task task) {
-        if (viewedTasks.size() == 10) {
-            viewedTasks.removeFirst();
-        }
-        viewedTasks.add(task);
-    }
     private void universalStatusUpdate(Epic epic) {
         int statusNewCounter = 0;
         int statusDoneCounter = 0;
@@ -62,7 +52,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(Integer id) {
         Task task = tasks.get(id);
-        addTaskToViewed(task);
+        if (task != null) {
+            inMemoryHistoryManager.addTaskToViewed(task);
+        }
         return task;
     }
 
@@ -104,7 +96,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Epic getEpicById(Integer id) {
         Epic epic = epics.get(id);
-        addTaskToViewed(epic);
+        if (epic != null) {
+            inMemoryHistoryManager.addTaskToViewed(epic);
+        }
         return epic;
     }
 
@@ -184,7 +178,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtaskById(Integer id) {
         Subtask subtask = subtasks.get(id);
-        addTaskToViewed(subtask);
+        if (subtask != null) {
+            inMemoryHistoryManager.addTaskToViewed(subtask);
+        }
         return subtask;
     }
 
@@ -199,6 +195,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getHistory() {
-        return viewedTasks;
+        return inMemoryHistoryManager.getViewedTasks();
     }
+
 }

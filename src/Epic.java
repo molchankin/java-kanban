@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Epic extends Task {
     private final List<Integer> subtasksIds = new ArrayList<>();
@@ -40,4 +41,21 @@ public class Epic extends Task {
                 ", id=" + id +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Epic epic = (Epic) obj;
+        return Objects.equals(title, epic.title) &&
+                Objects.equals(description, epic.description) &&
+                progressStatus == epic.progressStatus &&
+                Objects.equals(id, epic.id);
+    }
+
+
 }

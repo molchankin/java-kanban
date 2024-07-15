@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Task {
     protected String title;
     protected String description;
@@ -57,5 +59,25 @@ public class Task {
                 ", progressStatus=" + progressStatus +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Task task = (Task) obj;
+        return Objects.equals(title, task.title) &&
+                Objects.equals(description, task.description) &&
+                progressStatus == task.progressStatus &&
+                Objects.equals(id, task.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description, progressStatus, id);
     }
 }
