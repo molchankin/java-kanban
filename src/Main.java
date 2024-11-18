@@ -24,6 +24,7 @@ public class Main {
         taskManager.addSubtask(subtask4);
         printAllTasks(taskManager);
         taskManager.deleteSubtaskById(subtask3.getId());
+        taskManager.getTaskById(task1.getId());
         printAllTasks(taskManager);
     }
 
