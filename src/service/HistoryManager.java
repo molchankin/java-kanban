@@ -12,5 +12,4 @@ public interface HistoryManager {
 
     void remove(int id);
 
-    void removeNode(HistoryNode node);
 }
