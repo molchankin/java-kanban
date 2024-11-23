@@ -1,15 +1,15 @@
-package test;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import service.HistoryManager;
 import service.Managers;
 import service.TaskManager;
 import task.Epic;
 import task.ProgressStatus;
 import task.Subtask;
 import task.Task;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TaskTest {
 
@@ -131,5 +131,27 @@ class TaskTest {
         taskManager.updateTask(task3);
         assertEquals(task1, taskManager.getHistory().getFirst());
     }
-    
+
+    @Test
+    public void checkAddTaskToViewed() {
+        HistoryManager historyManager = Managers.getDefaultHistory();
+        Task task1 = new Task("Task1", "Description1", ProgressStatus.NEW, 1);
+        historyManager.addTaskToViewed(task1);
+        Task task3 = new Task("UpdatedTask1", "UpdatedDescription1", ProgressStatus.IN_PROGRESS, 3);
+        historyManager.addTaskToViewed(task3);
+        historyManager.addTaskToViewed(task1);
+        assertEquals(task1, historyManager.getViewedTasks().getLast());
+    }
+
+    @Test
+    public void checkRemoveNode() {
+        HistoryManager historyManager = Managers.getDefaultHistory();
+        Task task1 = new Task("Task1", "Description1", ProgressStatus.NEW, 1);
+        historyManager.addTaskToViewed(task1);
+        Task task3 = new Task("UpdatedTask1", "UpdatedDescription1", ProgressStatus.IN_PROGRESS, 3);
+        historyManager.addTaskToViewed(task3);
+        historyManager.remove(task1.getId());
+        historyManager.remove(task3.getId());
+        assertTrue(historyManager.getViewedTasks().isEmpty());
+    }
 }
