@@ -53,6 +53,10 @@ public class Task {
         return progressStatus;
     }
 
+    public TaskType getType() {
+        return TaskType.TASK;
+    }
+
     @Override
     public String toString() {
         return "Task.Task{" +

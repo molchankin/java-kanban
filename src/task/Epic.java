@@ -59,5 +59,10 @@ public class Epic extends Task {
                 Objects.equals(id, epic.id);
     }
 
+    @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
+
 
 }

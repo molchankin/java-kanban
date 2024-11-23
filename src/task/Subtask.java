@@ -20,7 +20,6 @@ public class Subtask extends Task {
         return epicId;
     }
 
-    
 
     @Override
     public String toString() {
@@ -32,6 +31,7 @@ public class Subtask extends Task {
                 ", id=" + id +
                 '}';
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -48,5 +48,8 @@ public class Subtask extends Task {
                 Objects.equals(epicId, subtask.epicId);
     }
 
-
+    @Override
+    public TaskType getType() {
+        return TaskType.SUBTASK;
+    }
 }

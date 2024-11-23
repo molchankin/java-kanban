@@ -1,5 +1,6 @@
 package service;
 
+import impl.FileBackedTaskManager;
 import impl.InMemoryHistoryManager;
 import impl.InMemoryTaskManager;
 
@@ -12,4 +13,7 @@ public final class Managers {
         return new InMemoryHistoryManager();
     }
 
+    public static FileBackedTaskManager getFileBackedTaskManager() {
+        return new FileBackedTaskManager();
+    }
 }
