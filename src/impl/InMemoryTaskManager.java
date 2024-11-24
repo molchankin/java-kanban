@@ -19,6 +19,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     private Integer idCounter = 0;
 
+    protected void setIdCounter(Integer idCounter) {
+        this.idCounter = Math.max(this.idCounter, idCounter);
+    }
+
     private Integer getIdCounter() {
         idCounter++;
         return idCounter;
@@ -45,6 +49,22 @@ public class InMemoryTaskManager implements TaskManager {
             epic.setProgressStatus(ProgressStatus.DONE);
         } else {
             epic.setProgressStatus(ProgressStatus.IN_PROGRESS);
+        }
+    }
+
+    protected void addTaskFromFile(Task task) {
+        tasks.put(task.getId(), task);
+    }
+
+    protected void addEpicFromFile(Epic epic) {
+        epics.put(epic.getId(), epic);
+    }
+
+    protected void addSubtaskFromFile(Subtask subtask) {
+        subtasks.put(subtask.getId(), subtask);
+        Epic epic = epics.get(subtask.getEpicId());
+        if (epic != null) {
+            epic.addSubtask(subtask);
         }
     }
 

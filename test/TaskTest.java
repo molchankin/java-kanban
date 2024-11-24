@@ -150,11 +150,12 @@ class TaskTest {
         Task task3 = new Task("UpdatedTask1", "UpdatedDescription1", ProgressStatus.IN_PROGRESS);
         Task task2 = new Task("UpdatedTask2", "UpdatedDescription2", ProgressStatus.NEW);
         Epic epic1 = new Epic("Epic1", "Description1");
-        TaskManager taskManager = Managers.getFileBackedTaskManager();
+        File file = File.createTempFile("test", ".csv");
+        TaskManager taskManager = new FileBackedTaskManager(file);
         taskManager.addTask(task3);
         taskManager.addTask(task2);
         taskManager.addEpic(epic1);
-        TaskManager anotherTaskManager = FileBackedTaskManager.loadFromFile(new File("tasks.csv"));
+        TaskManager anotherTaskManager = FileBackedTaskManager.loadFromFile(file);
         assertTrue(anotherTaskManager.getAllTasks().contains(task3));
         assertTrue(anotherTaskManager.getAllTasks().contains(task2));
         assertTrue(anotherTaskManager.getAllEpics().contains(epic1));
