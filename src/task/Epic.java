@@ -8,8 +8,8 @@ public class Epic extends Task {
     private final List<Integer> subtasksIds = new ArrayList<>();
 
 
-    public Epic(String title, String description, Integer id) {
-        super(title, description, ProgressStatus.NEW, id);
+    public Epic(String title, String description, Integer id, ProgressStatus progressStatus) {
+        super(title, description, progressStatus, id);
     }
 
     public Epic(String title, String description) {
@@ -57,6 +57,11 @@ public class Epic extends Task {
                 Objects.equals(description, epic.description) &&
                 progressStatus == epic.progressStatus &&
                 Objects.equals(id, epic.id);
+    }
+
+    @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
     }
 
 

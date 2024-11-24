@@ -48,5 +48,8 @@ public class Subtask extends Task {
                 Objects.equals(epicId, subtask.epicId);
     }
 
-
+    @Override
+    public TaskType getType() {
+        return TaskType.SUBTASK;
+    }
 }

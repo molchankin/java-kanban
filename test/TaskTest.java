@@ -1,3 +1,4 @@
+import impl.FileBackedTaskManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import service.HistoryManager;
@@ -7,6 +8,9 @@ import task.Epic;
 import task.ProgressStatus;
 import task.Subtask;
 import task.Task;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -133,6 +137,30 @@ class TaskTest {
     }
 
     @Test
+    public void checkEmptyFileLoad() throws IOException {
+        File file = File.createTempFile("test", ".csv");
+        FileBackedTaskManager fileBackedTaskManager = FileBackedTaskManager.loadFromFile(file);
+        assertTrue(fileBackedTaskManager.getAllTasks().isEmpty());
+        assertTrue(fileBackedTaskManager.getAllEpics().isEmpty());
+        assertTrue(fileBackedTaskManager.getAllSubtasks().isEmpty());
+    }
+
+    @Test
+    public void checkFileSaveAndLoad() throws IOException {
+        Task task3 = new Task("UpdatedTask1", "UpdatedDescription1", ProgressStatus.IN_PROGRESS);
+        Task task2 = new Task("UpdatedTask2", "UpdatedDescription2", ProgressStatus.NEW);
+        Epic epic1 = new Epic("Epic1", "Description1");
+        File file = File.createTempFile("test", ".csv");
+        TaskManager taskManager = new FileBackedTaskManager(file);
+        taskManager.addTask(task3);
+        taskManager.addTask(task2);
+        taskManager.addEpic(epic1);
+        TaskManager anotherTaskManager = FileBackedTaskManager.loadFromFile(file);
+        assertTrue(anotherTaskManager.getAllTasks().contains(task3));
+        assertTrue(anotherTaskManager.getAllTasks().contains(task2));
+        assertTrue(anotherTaskManager.getAllEpics().contains(epic1));
+    }
+
     public void checkAddTaskToViewed() {
         HistoryManager historyManager = Managers.getDefaultHistory();
         Task task1 = new Task("Task1", "Description1", ProgressStatus.NEW, 1);
