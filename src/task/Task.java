@@ -1,5 +1,7 @@
 package task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -7,12 +9,32 @@ public class Task {
     protected String description;
     protected ProgressStatus progressStatus;
     protected Integer id;
+    protected Duration duration = Duration.ZERO;
+    protected LocalDateTime startTime;
+
 
     public Task(String title, String description, ProgressStatus progressStatus, Integer id) {
         this.title = title;
         this.description = description;
         this.progressStatus = progressStatus;
         this.id = id;
+    }
+
+    public Task(String title, String description, ProgressStatus progressStatus, Duration duration, LocalDateTime startTime) {
+        this.title = title;
+        this.description = description;
+        this.progressStatus = progressStatus;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
+    public Task(String title, String description, ProgressStatus progressStatus, Integer id, Duration duration, LocalDateTime startTime) {
+        this.title = title;
+        this.description = description;
+        this.progressStatus = progressStatus;
+        this.id = id;
+        this.duration = duration;
+        this.startTime = startTime;
     }
 
     public Task(String title, String description, ProgressStatus progressStatus) {
@@ -57,6 +79,26 @@ public class Task {
         return TaskType.TASK;
     }
 
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plus(duration);
+    }
+
     @Override
     public String toString() {
         return "Task.Task{" +
@@ -86,4 +128,5 @@ public class Task {
     public int hashCode() {
         return Objects.hash(title, description, progressStatus, id);
     }
+
 }

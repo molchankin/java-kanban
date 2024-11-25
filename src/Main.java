@@ -5,12 +5,15 @@ import task.ProgressStatus;
 import task.Subtask;
 import task.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Main {
 
     public static void main(String[] args) {
         TaskManager taskManager = Managers.getDefaults();
 
-        Task task1 = new Task("Сдать пятый проект", "Осталось мало времени", ProgressStatus.IN_PROGRESS);
+        Task task1 = new Task("Сдать пятый проект", "Осталось мало времени", ProgressStatus.IN_PROGRESS, Duration.ofMinutes(30), LocalDateTime.now());
         taskManager.addTask(task1);
         Epic epic1 = new Epic("Эпик1", "Описание эпика1");
         taskManager.addEpic(epic1);
