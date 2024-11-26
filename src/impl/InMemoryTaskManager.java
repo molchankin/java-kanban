@@ -153,8 +153,9 @@ public class InMemoryTaskManager implements TaskManager {
         Task task = tasks.get(id);
         if (task != null) {
             inMemoryHistoryManager.addTaskToViewed(task);
+            return task;
         }
-        return task;
+        throw new NotFoundException();
     }
 
     @Override
@@ -214,8 +215,9 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epics.get(id);
         if (epic != null) {
             inMemoryHistoryManager.addTaskToViewed(epic);
+            return epic;
         }
-        return epic;
+        throw new NotFoundException();
     }
 
     @Override
@@ -306,8 +308,9 @@ public class InMemoryTaskManager implements TaskManager {
         Subtask subtask = subtasks.get(id);
         if (subtask != null) {
             inMemoryHistoryManager.addTaskToViewed(subtask);
+            return subtask;
         }
-        return subtask;
+        throw new NotFoundException();
     }
 
     @Override
