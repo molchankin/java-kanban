@@ -7,9 +7,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
-    private static final String header = "id,type,name,status,description,epic\n";
+    private static final String header = "id,type,name,status,description,duration,startTime,epic\n";
     private final File file;
 
     public FileBackedTaskManager(File file) {
@@ -17,27 +19,34 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private String toString(Task task) {
-        String base = task.getId() + "," + task.getType() + "," + task.getTitle() + "," + task.getProgressStatus() + "," + task.getDescription();
+        String base = task.getId() + "," + task.getType() + "," + task.getTitle() + "," + task.getProgressStatus() + "," + task.getDescription() + "," + task.getDuration() + "," + task.getStartTime();
         if (task.getType() == TaskType.SUBTASK) {
             return base + "," + ((Subtask) task).getEpicId();
         }
         return base;
     }
 
-    private Task fromString(String string) {
+    public Task fromString(String string) {
         String[] parts = string.split(",");
-        if (parts.length < 5) {
+        if (parts.length < 7) {
             throw new ManagerSaveException("Неверный размер строки: " + string);
         }
         int id = Integer.parseInt(parts[0]);
         TaskType type = TaskType.valueOf(parts[1]);
+        String startTimeString = parts[6];
+        LocalDateTime startTime;
+        try {
+            startTime = LocalDateTime.parse(startTimeString);
+        } catch (Exception e) {
+            startTime = null;
+        }
         switch (type) {
             case TASK:
-                return new Task(parts[2], parts[4], ProgressStatus.valueOf(parts[3]), id);
+                return new Task(parts[2], parts[4], ProgressStatus.valueOf(parts[3]), id, Duration.parse(parts[5]), startTime);
             case SUBTASK:
-                return new Subtask(parts[2], parts[4], ProgressStatus.valueOf(parts[3]), Integer.parseInt(parts[5]), id);
+                return new Subtask(parts[2], parts[4], ProgressStatus.valueOf(parts[3]), Integer.parseInt(parts[7]), id, Duration.parse(parts[5]), startTime);
             case EPIC:
-                return new Epic(parts[2], parts[4], id, ProgressStatus.valueOf(parts[3]));
+                return new Epic(parts[2], parts[4], id, ProgressStatus.valueOf(parts[3]), Duration.parse(parts[5]), startTime);
             default:
                 throw new ManagerSaveException("Неверный тип задачи: " + string);
         }
