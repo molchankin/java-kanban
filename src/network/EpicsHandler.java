@@ -67,7 +67,7 @@ public class EpicsHandler extends BaseHttpHandler {
         }
         int id = idOpt.get();
         taskManager.deleteEpicById(id);
-        sendText(exchange, "Задача удалена");
+        sendText(exchange, "Эпик удален");
     }
 
     private void handleCreateOrUpdateEpic(HttpExchange exchange) throws IOException {
@@ -80,7 +80,7 @@ public class EpicsHandler extends BaseHttpHandler {
             } else {
                 taskManager.updateEpic(epic);
             }
-            sendText(exchange, "Эпик добавлен");
+            sendText(exchange, "Эпик добавлен. ID: " + epic.getId());
         } catch (AddTaskException e) {
             sendHasInteractions(exchange);
         }

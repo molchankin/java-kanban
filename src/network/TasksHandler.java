@@ -76,7 +76,7 @@ public class TasksHandler extends BaseHttpHandler {
             } else {
                 taskManager.updateTask(task);
             }
-            sendText(exchange, "Задача добавлена");
+            sendText(exchange, "Задача добавлена.ID: " + task.getId());
         } catch (AddTaskException e) {
             sendHasInteractions(exchange);
         }

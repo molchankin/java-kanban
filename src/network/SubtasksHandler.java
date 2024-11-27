@@ -76,7 +76,7 @@ public class SubtasksHandler extends BaseHttpHandler {
             } else {
                 taskManager.updateSubtask(subtask);
             }
-            sendText(exchange, "Подзадача добавлена");
+            sendText(exchange, "Подзадача добавлена. ID: " + subtask.getId());
         } catch (AddTaskException e) {
             sendHasInteractions(exchange);
         }

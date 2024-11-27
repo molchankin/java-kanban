@@ -24,10 +24,12 @@ public class HttpTaskServer {
 
     public void start() {
         httpServer.start();
+        System.out.println("Сервер запущен. Порт: " + PORT);
     }
 
     public void stop() {
         httpServer.stop(1);
+        System.out.println("Сервер остановлен");
     }
 
     public static void main(String[] args) throws IOException {
