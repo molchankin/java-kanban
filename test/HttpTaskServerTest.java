@@ -59,14 +59,8 @@ public class HttpTaskServerTest {
     @AfterEach
     void tearDown() {
         server.stop();
-        //cleanUpTasks();
     }
 
-    private void cleanUpTasks() {
-        taskManager.deleteAllTasks();
-        taskManager.deleteAllEpics();
-        taskManager.deleteAllSubtasks();
-    }
 
     @Test
     void checkGetAllTasks() throws IOException, InterruptedException {
@@ -338,5 +332,22 @@ public class HttpTaskServerTest {
         assertEquals(200, response.statusCode());
         assertTrue(subtasks.contains(testSubtask));
         assertEquals(subtasks, taskManager.getSubtasksFromEpic(testEpic.getId()));
+    }
+
+    @Test
+    public void checkGetHistory() throws IOException, InterruptedException {
+        taskManager.getTaskById(testTask.getId());
+        HttpClient client = HttpClient.newHttpClient();
+        URI url = URI.create("http://localhost:8080/history");
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(url)
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        Type taskType = new TypeToken<List<Task>>() {
+        }.getType();
+        List<Task> history = gson.fromJson(response.body(), taskType);
+        assertEquals(200, response.statusCode());
+        assertEquals(history, taskManager.getHistory());
     }
 }
